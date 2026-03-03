@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Press Start 💾</title>
+
+<style>
+/* ================= RETRO GAME BACKGROUND ================= */
+body {
+    margin: 0;
+    font-family: 'Courier New', monospace; /* Retro font */
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: #00ffcc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Floating pixel squares (instead of hearts) */
+.pixel {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #00ffcc;
+    animation: float 8s linear infinite;
+    opacity: 0.7;
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh); }
+    100% { transform: translateY(-10vh); }
+}
+
+/* ================= CARD STYLE ================= */
+.card {
+    background: #111;
+    border: 3px solid #00ffcc;
+    width: 500px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 25px #00ffcc;
+    text-align: center;
+}
+
+/* Hide part 2 first */
+#part2 { display: none; }
+
+/* ================= RETRO BUTTON ================= */
+button {
+    padding: 12px 25px;
+    background: #00ffcc;
+    border: none;
+    color: black;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px #009e82;
+    transition: 0.1s;
+}
+
+button:active {
+    box-shadow: 0 2px #009e82;
+    transform: translateY(3px);
+}
+
+/* ================= GALLERY ================= */
+.gallery {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.gallery img {
+    width: 30%;
+    border: 2px solid #00ffcc;
+    border-radius: 5px;
+}
+
+/* Counter */
+.counter {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #00ffcc;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= BACKGROUND MUSIC ================= -->
+<!-- Replace music.mp3 with your own file -->
+<audio autoplay loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ================= PART 1 ================= -->
+<div id="part1" class="card">
+
+    <!-- EDIT TITLE HERE -->
+    <h2>PRESS START 🎮</h2>
+
+    <!-- EDIT TEXT HERE -->
+    <p>Click the button to load a special message...</p>
+
+    <!-- CLICK TO OPEN BUTTON -->
+    <button onclick="openLetter()">Start Game ▶</button>
+</div>
+
+<!-- ================= PART 2 ================= -->
+<div id="part2" class="card">
+
+    <!-- EDIT MESSAGE HERE -->
+    <h2>Player 1: You 💚</h2>
+
+    <p>
+        I miss you more than I probably say.
+        I know work has been tough lately,
+        but you’re honestly doing amazing.
+    </p>
+
+    <p>
+        You’re stronger than every hard day.
+        Don’t forget that.
+    </p>
+
+    <p>
+        When we both get some free time again,
+        let’s queue up and play together 🎮
+        I’ll always be ready to team up with you.
+    </p>
+
+    <!-- LOVE COUNTER -->
+    <!-- CHANGE DATE BELOW -->
+    <div class="counter">
+        Game Time Together:
+        <div id="loveTimer"></div>
+    </div>
+
+    <!-- 3 PICTURES -->
+    <div class="gallery">
+        <!-- Replace with your own image file names -->
+        <img src="image1.jpg" alt="Memory 1">
+        <img src="image2.jpg" alt="Memory 2">
+        <img src="image3.jpg" alt="Memory 3">
+    </div>
+
+    <p style="margin-top:20px;">
+        — Your Player 2 💾
+    </p>
+
+</div>
+
+<script>
+
+/* ================= FLOATING PIXELS ================= */
+function createPixel() {
+    const pixel = document.createElement("div");
+    pixel.classList.add("pixel");
+    pixel.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(pixel);
+
+    setTimeout(() => {
+        pixel.remove();
+    }, 8000);
+}
+setInterval(createPixel, 400);
+
+/* ================= OPEN LETTER ================= */
+function openLetter() {
+    document.getElementById("part1").style.display = "none";
+    document.getElementById("part2").style.display = "block";
+}
+
+/* ================= COUNTER ================= */
+/* CHANGE THIS DATE */
+const startDate = new Date("2024-01-01");
+
+function updateCounter() {
+    const now = new Date();
+    const diff = now - startDate;
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("loveTimer").innerHTML =
+        days + "d " +
+        hours + "h " +
+        minutes + "m " +
+        seconds + "s";
+}
+
+setInterval(updateCounter, 1000);
+
+</script>
+
+</body>
+</html>
